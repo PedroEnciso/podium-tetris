@@ -46,16 +46,18 @@ const Playfield = ({
   score,
   updateHighScoresCreator,
   setPopinCreator,
+  setPausePopinCreator,
+  setClearPopinCreator,
   popinState,
 }) => {
   useEffect(() => {
     setPopinStateValue(popinState);
     if (countDownIsOver) {
       // open a popin
-      if (popinState !== "inactive") {
+      if (popinState !== "noPopin") {
         togglePause("pause");
         // close a popin
-      } else if (gameIsPaused && popinState === "inactive") {
+      } else if (gameIsPaused && popinState === "noPopin") {
         if (gameIsRunning) {
           // close popin about
           togglePause("unpause");
@@ -405,10 +407,23 @@ const Playfield = ({
     if (action === "toggle") {
       action = gameIsPaused ? "unpause" : "pause";
     }
-    if (action === "pause") {
+
+    if (action === "pause" && popinStateValue === "noPopin") {
+      // user paused the game, pause the game and show pause screen
+      clearInterval(timerTetrominoesFalling);
+      setPausePopinCreator();
+      gameIsPaused = true;
+    } else if (action === "pause" && popinStateValue === "about") {
+      // user clicked about, pause the game
       clearInterval(timerTetrominoesFalling);
       gameIsPaused = true;
-    } else if (action === "unpause" && popinStateValue === "inactive") {
+    } else if (action === "unpause" && popinStateValue === "pause") {
+      // user unpaused the game, remove pause screen and continue game
+      setClearPopinCreator();
+      timerTetrominoesFalling = setInterval(() => tick(), speed);
+      gameIsPaused = false;
+    } else if (action === "unpause" && popinStateValue === "noPopin") {
+      // user clicked out of about screen, continue game
       timerTetrominoesFalling = setInterval(() => tick(), speed);
       gameIsPaused = false;
     }
@@ -463,6 +478,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch({ type: "UPDATE_HIGH_SCORES", newScore: score }),
   setPopinCreator: () =>
     dispatch({ type: "SET_POPIN_STATE", popinState: "gameOver" }),
+  setPausePopinCreator: () =>
+    dispatch({ type: "SET_POPIN_STATE", popinState: "pause" }),
+  setClearPopinCreator: () =>
+    dispatch({ type: "SET_POPIN_STATE", popinState: "noPopin" }),
 });
 
 Countdown.propTypes = {
@@ -476,6 +495,8 @@ Countdown.propTypes = {
   score: PropTypes.number,
   updateHighScoresCreator: PropTypes.func,
   setPopinCreator: PropTypes.func,
+  setPausePopinCreator: PropTypes.func,
+  setClearPopinCreator: PropTypes.func,
   popinState: PropTypes.string,
 };
 
