@@ -101,7 +101,6 @@ const Playfield = ({
   }
 
   function setNextShape(newNextShape) {
-    console.log("in setNextShape, new shape is", newNextShape);
     setNextTetrominoCreator(newNextShape);
     nextShape = newNextShape;
   }
