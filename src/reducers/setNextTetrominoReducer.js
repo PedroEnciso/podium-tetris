@@ -1,12 +1,12 @@
-import { SET_NEXT_TETROMINO } from '../actions/types'
+import { SET_NEXT_TETROMINO } from "../actions/types";
 
-function setNextTetrominoReducer(state='nothing', action) {
-    switch (action.type) {
-        case SET_NEXT_TETROMINO:
-            return action.nextTetromino
-        default:
-            return state
-    }
+function setNextTetrominoReducer(state = "nothing", action) {
+  switch (action.type) {
+    case SET_NEXT_TETROMINO:
+      return action.nextTetromino;
+    default:
+      return state;
+  }
 }
 
-export default setNextTetrominoReducer
+export default setNextTetrominoReducer;
