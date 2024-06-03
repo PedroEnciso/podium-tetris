@@ -1,8 +1,16 @@
 /*  TETRIS
   ============================== */
-  
+
 .tetris {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 1rem;
+}
+
+@media screen and (min-width: 1024px) {
+  .tetris {
     display: flex;
     justify-content: center;
-    padding: 16px;
+  }
 }

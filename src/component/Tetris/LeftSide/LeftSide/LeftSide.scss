@@ -2,24 +2,24 @@
   ============================== */
 
 .left-side {
-    justify-content: space-between;
-    padding-right: 32px;
+  justify-content: space-between;
+  padding-right: 32px;
 }
 
 @media screen and (min-width: 768px) and (max-height: 774px) {
-    .isTouch .left-side {
-        display: flex;
-    }
+  .isTouch .left-side {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 1024px) and (max-height: 1115px) {
-    .isTouch .left-side {
-        display: flex;
-    }
+  .isTouch .left-side {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 1096px) {
-    .isTouch .left-side {
-        display: flex;
-    }
+  .isTouch .left-side {
+    display: flex;
+  }
 }
